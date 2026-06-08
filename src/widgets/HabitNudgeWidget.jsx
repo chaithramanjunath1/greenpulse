@@ -41,15 +41,22 @@ const HabitNudgeWidget = ({ actions, completedIds, onToggle }) => {
           const effortClass = `gp-badge gp-badge--${action.effort}`;
 
           return (
-            <div key={action.id} className={`gp-nudge${isDone ? ' gp-nudge--done' : ''}`}>
-              <button
+            <div 
+              key={action.id} 
+              className={`gp-nudge${isDone ? ' gp-nudge--done' : ''}`}
+              onClick={() => onToggle(action.id)}
+              style={{ cursor: 'pointer' }}
+              role="button"
+              tabIndex="0"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onToggle(action.id); }}
+            >
+              <div
                 className={`gp-nudge__check${isDone ? ' gp-nudge__check--done' : ''}`}
-                onClick={() => onToggle(action.id)}
                 aria-label={`${isDone ? 'Unmark' : 'Mark'} "${action.label}" as done`}
                 id={`nudge-${action.id}`}
               >
                 {isDone ? '✓' : ''}
-              </button>
+              </div>
               <div className="gp-nudge__body">
                 <p className="gp-nudge__label">{action.label}</p>
                 <div className="gp-flex" style={{ marginTop: '0.25rem' }}>
