@@ -98,7 +98,8 @@ export const obtainEcoAdvice = async (userProfile) => {
     adviceCache.set(cacheKey, fallback);
     return fallback;
   } catch (err) {
-    console.error('[GreenPulse AI]', err.message);
+    // eslint-disable-next-line no-console
+    console.error('[Gemini API Error]', err.message);
     const fallback = generateMockAdvice(userProfile);
     adviceCache.set(cacheKey, fallback);
     return fallback;

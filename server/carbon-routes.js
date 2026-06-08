@@ -109,7 +109,8 @@ carbonRouter.post('/advisor/suggest', async (req, res) => {
     const advice = await obtainEcoAdvice(profile);
     res.json({ advice });
   } catch (err) {
-    console.error('[Advisor Error]', err.message);
+    // eslint-disable-next-line no-console
+    console.error('[Route Error]', err.message);
     res.status(502).json({ error: 'Advice service temporarily unavailable' });
   }
 });

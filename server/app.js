@@ -102,6 +102,7 @@ if (process.env.NODE_ENV === 'production') {
 
 /* ── Global error boundary ────────────────────────────────────── */
 app.use((err, _req, res, _next) => {
+  // eslint-disable-next-line no-console
   console.error('[GreenPulse Error]', err.message);
   const status = err.statusCode || 500;
   const isProduction = process.env.NODE_ENV === 'production';
@@ -113,6 +114,7 @@ app.use((err, _req, res, _next) => {
 /* ── Start ─────────────────────────────────────────────────────── */
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.info(`🟢 GreenPulse API running → http://localhost:${PORT}`);
 });
 

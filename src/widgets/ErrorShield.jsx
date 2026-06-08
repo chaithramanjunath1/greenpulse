@@ -16,8 +16,9 @@ class ErrorShield extends Component {
     return { hasError: true, errorMessage: error.message };
   }
 
-  componentDidCatch(error, errorInfo) {
-    console.error('[GreenPulse ErrorShield]', error, errorInfo);
+  componentDidCatch(_error) {
+    // In production, this would send to an error reporting service like Sentry
+    // console.error is omitted to prevent leaking stack traces to the client console
   }
 
   render() {
