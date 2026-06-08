@@ -189,16 +189,13 @@ body::before {
 
 /* ── Layout ──────────────────────────────────────────────────── */
 .gp-app-shell {
-  display: grid;
-  grid-template-columns: 72px 1fr;
   min-height: 100vh;
 }
 
 .gp-viewport-area {
-  padding: var(--gp-space-xl);
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
+  margin-left: 72px;
+  padding: var(--gp-space-2xl) var(--gp-space-xl);
+  max-width: 1100px;
 }
 
 .gp-grid {
@@ -684,12 +681,13 @@ body::before {
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .gp-app-shell {
-    grid-template-columns: 1fr;
-    padding-bottom: 72px;
+@media (max-width: 960px) {
+  .gp-grid--3col {
+    grid-template-columns: 1fr 1fr;
   }
+}
 
+@media (max-width: 768px) {
   .gp-spine {
     position: fixed;
     top: auto;
@@ -715,7 +713,9 @@ body::before {
   }
 
   .gp-viewport-area {
+    margin-left: 0;
     padding: var(--gp-space-md);
+    padding-bottom: 80px;
   }
 
   .gp-grid--2col,
