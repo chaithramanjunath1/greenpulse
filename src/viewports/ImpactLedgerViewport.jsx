@@ -2,6 +2,7 @@ import { useLifestyle } from '../flux/LifestyleDispatcher.jsx';
 import { ACTIONS } from '../flux/ActionCatalog.js';
 import { computeSingleEntry, resolveSector } from '../algorithms/CarbonMath.js';
 import LifestyleInputWidget from '../widgets/LifestyleInputWidget.jsx';
+import EmissionTrendWidget from '../widgets/EmissionTrendWidget.jsx';
 
 const SECTOR_ICONS = {
   commute: '🚗',
@@ -26,10 +27,18 @@ const ImpactLedgerViewport = () => {
       timestamp: new Date().toISOString(),
     };
     dispatch({ type: ACTIONS.APPEND_ACTIVITY, payload: enrichedEntry });
+    dispatch({ 
+      type: ACTIONS.SHOW_TOAST, 
+      payload: { type: 'success', title: 'Activity Logged', message: `Added ${kg} kg CO₂ to your ledger.` } 
+    });
   };
 
   const handleDiscard = (index) => {
     dispatch({ type: ACTIONS.DISCARD_ACTIVITY, payload: index });
+    dispatch({ 
+      type: ACTIONS.SHOW_TOAST, 
+      payload: { type: 'info', title: 'Activity Removed', message: 'Your footprint has been updated.' } 
+    });
   };
 
   return (
@@ -46,6 +55,8 @@ const ImpactLedgerViewport = () => {
         isProcessing={isProcessing}
       />
 
+      {activities.length >= 2 && <EmissionTrendWidget activities={activities} />}
+
       {/* ── Activity History ────────────────────────────────── */}
       <div className="gp-card gp-animate-in gp-animate-in--delay-1" style={{ marginTop: 'var(--gp-space-xl)' }}>
         <div className="gp-flex gp-flex--between" style={{ marginBottom: 'var(--gp-space-md)' }}>
@@ -54,7 +65,13 @@ const ImpactLedgerViewport = () => {
 
         {activities.length === 0 ? (
           <div className="gp-empty">
-            <span className="gp-empty__icon">📝</span>
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--gp-text-muted)', marginBottom: 'var(--gp-space-md)' }}>
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
             <p className="gp-empty__message">
               No activities logged yet. Start by adding your first entry above.
             </p>

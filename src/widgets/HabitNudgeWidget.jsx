@@ -15,7 +15,11 @@ const HabitNudgeWidget = ({ actions, completedIds, onToggle }) => {
     return (
       <div className="gp-card gp-animate-in">
         <p className="gp-label">Reduction Actions</p>
-        <div className="gp-empty" style={{ padding: 'var(--gp-space-lg) 0' }}>
+        <div className="gp-empty" style={{ padding: 'var(--gp-space-md) 0' }}>
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--gp-text-muted)', marginBottom: 'var(--gp-space-sm)' }}>
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
           <p className="gp-caption">Log activities to see personalized reduction actions</p>
         </div>
       </div>

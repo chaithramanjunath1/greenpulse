@@ -26,7 +26,11 @@ const CarbonSplitWidget = ({ bySector }) => {
     return (
       <div className="gp-card gp-card--compact gp-animate-in gp-animate-in--delay-2">
         <p className="gp-label" style={{ marginBottom: 'var(--gp-space-xs)' }}>Emission Breakdown</p>
-        <div className="gp-empty" style={{ padding: 'var(--gp-space-lg) 0' }}>
+        <div className="gp-empty" style={{ padding: 'var(--gp-space-md) 0' }}>
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--gp-text-muted)', marginBottom: 'var(--gp-space-sm)' }}>
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+          </svg>
           <p className="gp-caption">No emissions logged yet</p>
         </div>
       </div>

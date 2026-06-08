@@ -4,6 +4,7 @@ import NavigationSpine from './widgets/NavigationSpine.jsx';
 import CommandCenterViewport from './viewports/CommandCenterViewport.jsx';
 import ImpactLedgerViewport from './viewports/ImpactLedgerViewport.jsx';
 import ActionBlueprintViewport from './viewports/ActionBlueprintViewport.jsx';
+import ToastWidget from './widgets/ToastWidget.jsx';
 import './design/foundation.css';
 import './design/motion.css';
 
@@ -37,12 +38,15 @@ const AppCore = () => {
         onShift={handleNavigate}
       />
       <main className="gp-viewport-area">
-        {ActiveViewport ? (
-          <ActiveViewport onNavigate={handleNavigate} />
-        ) : (
-          <p className="gp-caption">Unknown viewport</p>
-        )}
+        <div key={activeViewport} className="gp-animate-in">
+          {ActiveViewport ? (
+            <ActiveViewport onNavigate={handleNavigate} />
+          ) : (
+            <p className="gp-caption">Unknown viewport</p>
+          )}
+        </div>
       </main>
+      <ToastWidget />
     </div>
   );
 };

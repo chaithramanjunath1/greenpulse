@@ -22,6 +22,13 @@ const ActionBlueprintViewport = () => {
       dispatch({ type: ACTIONS.UNMARK_ACTION_DONE, payload: actionId });
     } else {
       dispatch({ type: ACTIONS.MARK_ACTION_DONE, payload: actionId });
+      const action = actionPlan.find(a => a.id === actionId);
+      if (action) {
+        dispatch({ 
+          type: ACTIONS.SHOW_TOAST, 
+          payload: { type: 'reward', title: 'Action Completed!', message: `You're saving ${action.potentialSaving} kg CO₂/yr.` } 
+        });
+      }
     }
   };
 

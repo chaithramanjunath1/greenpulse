@@ -24,10 +24,14 @@ const ProgressRingWidget = ({ currentKg, targetKg, label }) => {
   const offset = circumference - (percent / 100) * circumference;
 
   let strokeColor = '#10b981';
+  let isGreat = false;
+  
   if (percent > 80) {
     strokeColor = '#f87171';
   } else if (percent > 50) {
     strokeColor = '#fbbf24';
+  } else if (percent > 0) {
+    isGreat = true;
   }
 
   return (
@@ -35,6 +39,7 @@ const ProgressRingWidget = ({ currentKg, targetKg, label }) => {
       <p className="gp-label" style={{ marginBottom: 'var(--gp-space-sm)' }}>{label}</p>
 
       <svg
+        className={isGreat ? 'gp-animate-pulse' : ''}
         width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}

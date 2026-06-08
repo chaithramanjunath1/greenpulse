@@ -55,9 +55,24 @@
   to { stroke-dashoffset: var(--gp-ring-offset); }
 }
 
+@keyframes gp-toast-slide-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 100%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
 /* ── Animation Utilities ─────────────────────────────────────── */
 .gp-animate-in {
   animation: gp-fadeSlideUp 0.5s var(--gp-ease) both;
+}
+
+.gp-animate-slide-up {
+  animation: gp-toast-slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 .gp-animate-in--delay-1 { animation-delay: 0.1s; }

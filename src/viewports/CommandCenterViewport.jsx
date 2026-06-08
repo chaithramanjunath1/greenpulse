@@ -18,7 +18,7 @@ const SECTOR_ICONS = {
  * Contains the single <h1> for the entire application.
  */
 const CommandCenterViewport = ({ onNavigate }) => {
-  const { emissions, activities, advice, isProcessing, dispatch } = useLifestyle();
+  const { emissions, activities, advice, isProcessing, completedActionIds, dispatch } = useLifestyle();
 
   const handleFetchAdvice = async () => {
     if (emissions.totalKg <= 0) {
@@ -34,10 +34,23 @@ const CommandCenterViewport = ({ onNavigate }) => {
 
   const recentActivities = activities.slice(0, 5);
 
+  const doneCount = completedActionIds ? completedActionIds.length : 0;
+  let rankInfo = { level: 'Eco-Novice', color: 'var(--gp-text-muted)' };
+  if (doneCount >= 4) {
+    rankInfo = { level: 'Eco-Champion', color: 'var(--gp-amber)' };
+  } else if (doneCount >= 1) {
+    rankInfo = { level: 'Eco-Guardian', color: 'var(--gp-emerald-bright)' };
+  }
+
   return (
     <div>
       {/* ── Hero Section with the sole H1 ────────────────────── */}
       <section className="gp-animate-in" style={{ marginBottom: 'var(--gp-space-2xl)' }}>
+        <div className="gp-flex" style={{ marginBottom: 'var(--gp-space-sm)' }}>
+          <span className="gp-badge" style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: rankInfo.color, border: `1px solid ${rankInfo.color}` }}>
+            {rankInfo.level} ({doneCount} actions)
+          </span>
+        </div>
         <h1 className="gp-headline">
           <span>Understand, Track, and Reduce</span>{' '}
           Your Carbon Footprint

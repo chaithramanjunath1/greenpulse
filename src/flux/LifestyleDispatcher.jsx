@@ -36,6 +36,7 @@ const buildInitialState = () => {
     activeViewport: 'command-center',
     isProcessing: false,
     fault: null,
+    toast: null,
   };
 };
 
@@ -99,6 +100,12 @@ const lifestyleReducer = (state, action) => {
 
     case ACTIONS.CLEAR_FAULT:
       return { ...state, fault: null };
+
+    case ACTIONS.SHOW_TOAST:
+      return { ...state, toast: action.payload };
+
+    case ACTIONS.HIDE_TOAST:
+      return { ...state, toast: null };
 
     default:
       return state;

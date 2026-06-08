@@ -680,6 +680,61 @@ body::before {
   max-width: 320px;
 }
 
+/* ── Toast Notifications ─────────────────────────────────────── */
+.gp-toast {
+  position: fixed;
+  bottom: var(--gp-space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gp-space-sm);
+  padding: var(--gp-space-md);
+  background: var(--gp-surface-overlay);
+  border: 1px solid var(--gp-emerald);
+  border-radius: var(--gp-radius-md);
+  box-shadow: var(--gp-shadow-medium), 0 0 15px rgba(16, 185, 129, 0.2);
+  z-index: 9999;
+  min-width: 300px;
+  max-width: 90vw;
+  backdrop-filter: blur(12px);
+}
+
+.gp-toast__icon {
+  font-size: 1.25rem;
+  margin-top: -2px;
+}
+
+.gp-toast__content {
+  flex: 1;
+}
+
+.gp-toast__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gp-text-bright);
+}
+
+.gp-toast__message {
+  font-size: 0.75rem;
+  color: var(--gp-text-normal);
+  margin-top: 0.25rem;
+}
+
+.gp-toast__close {
+  background: transparent;
+  border: none;
+  color: var(--gp-text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  transition: color var(--gp-duration) var(--gp-ease);
+}
+
+.gp-toast__close:hover {
+  color: var(--gp-text-bright);
+}
+
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 960px) {
   .gp-grid--3col {
