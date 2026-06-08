@@ -779,6 +779,28 @@ body::before {
   }
 }
 
+/* ── Info Cards (Educational) ────────────────────────────────── */
+.gp-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: var(--gp-space-sm) var(--gp-space-md);
+  background: var(--gp-surface-raised);
+  border: 1px solid var(--gp-glass-border);
+  border-radius: var(--gp-radius-md);
+  transition: transform var(--gp-duration) var(--gp-ease), box-shadow var(--gp-duration) var(--gp-ease);
+}
+
+.gp-info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--gp-shadow-glow);
+}
+
+.gp-info-card strong {
+  font-size: 0.875rem;
+  color: var(--gp-text-bright);
+}
+
 /* ── Accessibility ───────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,

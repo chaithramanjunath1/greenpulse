@@ -27,6 +27,7 @@ app.use(helmet({
       objectSrc: ["'none'"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
+      upgradeInsecureRequests: [],
     },
   },
   crossOriginEmbedderPolicy: false,
@@ -38,7 +39,10 @@ app.use((_req, res, next) => {
   res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('X-DNS-Prefetch-Control', 'off');
+  res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
+  res.setHeader('X-Download-Options', 'noopen');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()');
   next();
 });
 
@@ -100,8 +104,9 @@ if (process.env.NODE_ENV === 'production') {
 app.use((err, _req, res, _next) => {
   console.error('[GreenPulse Error]', err.message);
   const status = err.statusCode || 500;
+  const isProduction = process.env.NODE_ENV === 'production';
   res.status(status).json({
-    error: err.message || 'Internal server error',
+    error: isProduction ? 'Internal server error' : (err.message || 'Internal server error'),
   });
 });
 

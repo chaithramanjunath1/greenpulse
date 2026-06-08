@@ -79,7 +79,7 @@ const LifestyleInputWidget = ({ onSubmitEntry, isProcessing }) => {
   };
 
   return (
-    <form className="gp-card gp-animate-in" onSubmit={handleSubmit}>
+    <form className="gp-card gp-animate-in" onSubmit={handleSubmit} aria-label="Log a carbon-emitting activity">
       <h2 className="gp-subheading" style={{ marginBottom: 'var(--gp-space-lg)' }}>
         Log an Activity
       </h2>
@@ -124,7 +124,10 @@ const LifestyleInputWidget = ({ onSubmitEntry, isProcessing }) => {
             placeholder={`Enter ${unitLabel}`}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            aria-required="true"
+            aria-describedby="field-amount-hint"
           />
+          <span id="field-amount-hint" className="gp-sr-only">Enter a positive number representing {unitLabel}</span>
         </div>
       </div>
 

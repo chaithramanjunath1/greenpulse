@@ -133,6 +133,43 @@ const CommandCenterViewport = ({ onNavigate }) => {
           </div>
         </div>
       )}
+
+      {/* ── Understanding Section — educational content ──────── */}
+      <section className="gp-card gp-animate-in gp-animate-in--delay-4" style={{ marginTop: 'var(--gp-space-xl)' }} aria-labelledby="understand-heading">
+        <h2 className="gp-subheading" id="understand-heading" style={{ marginBottom: 'var(--gp-space-sm)' }}>
+          Understanding Your Carbon Footprint
+        </h2>
+        <p className="gp-body" style={{ marginBottom: 'var(--gp-space-md)' }}>
+          A carbon footprint measures the total greenhouse gas emissions caused by your daily activities, 
+          expressed in kilograms of CO₂ equivalent (kg CO₂e). The four major sectors are:
+        </p>
+        <div className="gp-grid gp-grid--auto" style={{ gap: 'var(--gp-space-sm)' }}>
+          <div className="gp-info-card">
+            <span aria-hidden="true">🚗</span>
+            <strong>Transportation</strong>
+            <span className="gp-caption">Driving, flying, and commuting — often the largest source.</span>
+          </div>
+          <div className="gp-info-card">
+            <span aria-hidden="true">🍽️</span>
+            <strong>Food &amp; Diet</strong>
+            <span className="gp-caption">Red meat and dairy have the highest per-serving emissions.</span>
+          </div>
+          <div className="gp-info-card">
+            <span aria-hidden="true">⚡</span>
+            <strong>Home Energy</strong>
+            <span className="gp-caption">Electricity and heating — switch to renewables to save big.</span>
+          </div>
+          <div className="gp-info-card">
+            <span aria-hidden="true">🛍️</span>
+            <strong>Shopping</strong>
+            <span className="gp-caption">Electronics and fast fashion carry hidden carbon costs.</span>
+          </div>
+        </div>
+        <p className="gp-caption" style={{ marginTop: 'var(--gp-space-md)', fontStyle: 'italic' }}>
+          The average person emits ~4,700 kg CO₂e per year. The 2030 Paris Agreement target is 2,500 kg. 
+          Track your activities above to see where you stand!
+        </p>
+      </section>
     </div>
   );
 };

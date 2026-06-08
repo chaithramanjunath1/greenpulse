@@ -41,7 +41,7 @@ const CarbonSplitWidget = ({ bySector }) => {
     <div className="gp-card gp-card--compact gp-animate-in gp-animate-in--delay-2">
       <p className="gp-label" style={{ marginBottom: 'var(--gp-space-sm)' }}>Emission Breakdown</p>
 
-      <div className="gp-split-bar">
+      <div className="gp-split-bar" role="img" aria-label={`Emission breakdown: ${entries.map(([s, kg]) => `${SECTOR_LABELS[s] || s} ${Math.round(kg)} kg`).join(', ')}`}>
         {entries.map(([sector, kg]) => {
           const pct = (kg / total) * 100;
           return (
