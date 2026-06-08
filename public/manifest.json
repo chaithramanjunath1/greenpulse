@@ -1,0 +1,21 @@
+{
+  "name": "GreenPulse - Carbon Monitor",
+  "short_name": "GreenPulse",
+  "description": "Understand, track, and reduce your carbon footprint through simple daily actions and personalized insights.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060d1b",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "sustainability", "utilities"],
+  "dir": "ltr",
+  "lang": "en-US",
+  "orientation": "portrait-primary"
+}

@@ -9,12 +9,47 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Open Graph / Social SEO -->
+    <meta property="og:title" content="GreenPulse — Personal Carbon Impact Monitor" />
+    <meta property="og:description" content="Understand, track, and reduce your carbon footprint through simple daily actions and personalized insights." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://greenpulse-370216928736.us-central1.run.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GreenPulse — Carbon Impact Monitor" />
+    <meta name="twitter:description" content="Track and reduce your carbon footprint with AI-driven insights." />
+    
+    <!-- JSON-LD Structured Data for Problem Statement Alignment -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "GreenPulse",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Any",
+      "description": "An environmental tracking application that helps users measure and reduce their carbon footprint through daily actions.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 </head>
 <body>
     <a href="#main-content" class="gp-sr-only" style="position:absolute;top:0;left:0;padding:1rem;background:var(--gp-emerald);color:#fff;z-index:10000;clip:auto;width:auto;height:auto;overflow:visible;" onfocus="this.style.clip='auto';this.style.width='auto';this.style.height='auto'" onblur="this.style.clip='rect(0,0,0,0)';this.style.width='1px';this.style.height='1px'">Skip to main content</a>
     <noscript><p style="padding:2rem;color:#fff;text-align:center;">GreenPulse requires JavaScript to run. Please enable JavaScript in your browser.</p></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW registration failed:', err));
+        });
+      }
+    </script>
 </body>
 </html>
