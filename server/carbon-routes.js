@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { validateCarbonPayload } from './validation-rules.js';
+import { validateCarbonPayload, validateAdvisorPayload, sanitizeString } from './validation-rules.js';
 import { obtainEcoAdvice } from './carbon-advisor.js';
 
 export const carbonRouter = Router();
@@ -55,16 +55,17 @@ carbonRouter.post('/carbon/evaluate', (req, res) => {
   const sectorTotals = {};
 
   for (const entry of entries) {
-    const factor = COEFFICIENTS[entry.kind];
+    const sanitizedKind = sanitizeString(entry.kind);
+    const factor = COEFFICIENTS[sanitizedKind];
     if (factor === undefined) {
-      results.push({ kind: entry.kind, kg: 0, note: 'unknown activity type' });
+      results.push({ kind: sanitizedKind, kg: 0, note: 'unknown activity type' });
       continue;
     }
 
     const kg = factor * entry.amount;
-    const sector = SECTOR_MAP[entry.kind] || 'other';
+    const sector = SECTOR_MAP[sanitizedKind] || 'other';
     sectorTotals[sector] = (sectorTotals[sector] || 0) + kg;
-    results.push({ kind: entry.kind, kg: Math.round(kg * 100) / 100, sector });
+    results.push({ kind: sanitizedKind, kg: Math.round(kg * 100) / 100, sector });
   }
 
   const totalKg = results.reduce((sum, r) => sum + r.kg, 0);
@@ -100,10 +101,11 @@ carbonRouter.get('/carbon/benchmarks', (_req, res) => {
  */
 carbonRouter.post('/advisor/suggest', async (req, res) => {
   try {
-    const profile = req.body;
-    if (!profile || typeof profile.totalKg !== 'number') {
-      return res.status(400).json({ error: 'Missing totalKg in request body' });
+    const check = validateAdvisorPayload(req.body);
+    if (!check.valid) {
+      return res.status(400).json({ error: 'Invalid profile', details: check.errors });
     }
+    const profile = req.body;
     const advice = await obtainEcoAdvice(profile);
     res.json({ advice });
   } catch (err) {

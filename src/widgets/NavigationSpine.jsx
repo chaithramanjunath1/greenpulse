@@ -7,8 +7,8 @@ const NAV_ITEMS = [
 ];
 
 /**
- * Vertical navigation spine (sidebar on desktop, bottom bar on mobile).
- * Vertical navigation spine (sidebar on desktop, bottom bar on mobile).
+ * Vertical navigation spine — sidebar on desktop, bottom bar on mobile.
+ * Renders navigation buttons for each viewport and highlights the active one.
  */
 const NavigationSpine = ({ activeViewport, onShift }) => {
   return (

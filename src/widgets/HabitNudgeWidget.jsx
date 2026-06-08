@@ -48,7 +48,7 @@ const HabitNudgeWidget = ({ actions, completedIds, onToggle }) => {
               style={{ cursor: 'pointer' }}
               role="button"
               tabIndex="0"
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onToggle(action.id); }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { onToggle(action.id); } }}
             >
               <div
                 className={`gp-nudge__check${isDone ? ' gp-nudge__check--done' : ''}`}

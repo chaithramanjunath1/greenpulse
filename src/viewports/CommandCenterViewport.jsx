@@ -5,6 +5,7 @@ import { requestAdvice } from '../connectors/pulse-api.js';
 import ProgressRingWidget from '../widgets/ProgressRingWidget.jsx';
 import CarbonSplitWidget from '../widgets/CarbonSplitWidget.jsx';
 import InsightPulseWidget from '../widgets/InsightPulseWidget.jsx';
+import BenchmarkWidget from '../widgets/BenchmarkWidget.jsx';
 
 const SECTOR_ICONS = {
   commute: '🚗',
@@ -70,6 +71,9 @@ const CommandCenterViewport = ({ onNavigate }) => {
         />
         <CarbonSplitWidget bySector={emissions.bySector} />
       </div>
+
+      {/* ── Benchmark Comparison ──────────────────────────────── */}
+      <BenchmarkWidget currentKg={emissions.totalKg} />
 
       {/* ── Quick Actions ────────────────────────────────────── */}
       <div className="gp-flex" style={{ gap: 'var(--gp-space-md)', marginBottom: 'var(--gp-space-xl)' }}>

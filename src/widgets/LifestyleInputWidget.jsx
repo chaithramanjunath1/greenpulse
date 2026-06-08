@@ -49,8 +49,8 @@ const SECTOR_OPTIONS = {
 const SECTOR_KEYS = Object.keys(SECTOR_OPTIONS);
 
 /**
- * Single-view activity input form.
  * Single-view activity input form with sector-based dropdowns.
+ * Allows users to log commute, diet, household, and consumption activities.
  */
 const LifestyleInputWidget = ({ onSubmitEntry, isProcessing }) => {
   const [sector, setSector] = useState(SECTOR_KEYS[0]);

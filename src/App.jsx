@@ -5,6 +5,7 @@ import CommandCenterViewport from './viewports/CommandCenterViewport.jsx';
 import ImpactLedgerViewport from './viewports/ImpactLedgerViewport.jsx';
 import ActionBlueprintViewport from './viewports/ActionBlueprintViewport.jsx';
 import ToastWidget from './widgets/ToastWidget.jsx';
+import ErrorShield from './widgets/ErrorShield.jsx';
 import './design/foundation.css';
 import './design/motion.css';
 
@@ -56,9 +57,11 @@ const AppCore = () => {
  */
 const App = () => {
   return (
-    <LifestyleProvider>
-      <AppCore />
-    </LifestyleProvider>
+    <ErrorShield>
+      <LifestyleProvider>
+        <AppCore />
+      </LifestyleProvider>
+    </ErrorShield>
   );
 };
 

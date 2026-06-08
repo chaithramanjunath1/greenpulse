@@ -18,29 +18,46 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       fontSrc: ["'self'", 'https://fonts.gstatic.com'],
       imgSrc: ["'self'", 'data:', 'blob:'],
       connectSrc: ["'self'", 'https://generativelanguage.googleapis.com'],
+      frameAncestors: ["'none'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
     },
   },
+  crossOriginEmbedderPolicy: false,
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
 }));
+
+/* ── Additional security headers ─────────────────────────────── */
+app.use((_req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
 
 /* ── CORS ─────────────────────────────────────────────────────── */
 app.use(cors({
   origin: [
     'http://localhost:5174',
     'http://localhost:3001',
+    'https://greenpulse-370216928736.us-central1.run.app',
   ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
+  credentials: false,
 }));
 
 /* ── Rate limiting ────────────────────────────────────────────── */
 const globalThrottle = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 60,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many requests. Please wait before trying again.' },
@@ -48,7 +65,7 @@ const globalThrottle = rateLimit({
 app.use(globalThrottle);
 
 /* ── Body parsing ─────────────────────────────────────────────── */
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '5kb' }));
 
 /* ── Routes ───────────────────────────────────────────────────── */
 app.use('/api/v1', carbonRouter);
