@@ -1,0 +1,86 @@
+import PropTypes from 'prop-types';
+
+const EFFORT_LABELS = {
+  minimal: 'Easy',
+  moderate: 'Medium',
+  significant: 'Hard',
+};
+
+/**
+ * Action checklist item with toggle.
+ * Action checklist item with toggle and effort badges.
+ */
+const HabitNudgeWidget = ({ actions, completedIds, onToggle }) => {
+  if (!actions || actions.length === 0) {
+    return (
+      <div className="gp-card gp-animate-in">
+        <p className="gp-label">Reduction Actions</p>
+        <div className="gp-empty" style={{ padding: 'var(--gp-space-lg) 0' }}>
+          <p className="gp-caption">Log activities to see personalized reduction actions</p>
+        </div>
+      </div>
+    );
+  }
+
+  const doneCount = actions.filter((a) => completedIds.includes(a.id)).length;
+
+  return (
+    <div className="gp-card gp-animate-in">
+      <div className="gp-flex gp-flex--between" style={{ marginBottom: 'var(--gp-space-md)' }}>
+        <p className="gp-label">Reduction Actions</p>
+        <span className="gp-caption">{doneCount} / {actions.length} completed</span>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--gp-space-xs)' }}>
+        {actions.map((action) => {
+          const isDone = completedIds.includes(action.id);
+          const effortClass = `gp-badge gp-badge--${action.effort}`;
+
+          return (
+            <div key={action.id} className={`gp-nudge${isDone ? ' gp-nudge--done' : ''}`}>
+              <button
+                className={`gp-nudge__check${isDone ? ' gp-nudge__check--done' : ''}`}
+                onClick={() => onToggle(action.id)}
+                aria-label={`${isDone ? 'Unmark' : 'Mark'} "${action.label}" as done`}
+                id={`nudge-${action.id}`}
+              >
+                {isDone ? '✓' : ''}
+              </button>
+              <div className="gp-nudge__body">
+                <p className="gp-nudge__label">{action.label}</p>
+                <div className="gp-flex" style={{ marginTop: '0.25rem' }}>
+                  <span className="gp-nudge__saving">
+                    Save ~{action.potentialSaving} kg/yr
+                  </span>
+                  <span className={effortClass}>
+                    {EFFORT_LABELS[action.effort] || action.effort}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+HabitNudgeWidget.propTypes = {
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      potentialSaving: PropTypes.number.isRequired,
+      effort: PropTypes.string.isRequired,
+    })
+  ),
+  completedIds: PropTypes.arrayOf(PropTypes.string),
+  onToggle: PropTypes.func.isRequired,
+};
+
+HabitNudgeWidget.defaultProps = {
+  actions: [],
+  completedIds: [],
+};
+
+export default HabitNudgeWidget;

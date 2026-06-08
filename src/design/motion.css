@@ -1,0 +1,82 @@
+/* ═══════════════════════════════════════════════════════════════
+   GreenPulse Motion — motion.css
+   Micro-animations for premium feel
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes gp-fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gp-pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(16, 185, 129, 0.3);
+  }
+}
+
+@keyframes gp-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes gp-rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes gp-scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gp-ringDraw {
+  from { stroke-dashoffset: var(--gp-ring-circumference); }
+  to { stroke-dashoffset: var(--gp-ring-offset); }
+}
+
+/* ── Animation Utilities ─────────────────────────────────────── */
+.gp-animate-in {
+  animation: gp-fadeSlideUp 0.5s var(--gp-ease) both;
+}
+
+.gp-animate-in--delay-1 { animation-delay: 0.1s; }
+.gp-animate-in--delay-2 { animation-delay: 0.2s; }
+.gp-animate-in--delay-3 { animation-delay: 0.3s; }
+.gp-animate-in--delay-4 { animation-delay: 0.4s; }
+
+.gp-animate-scale {
+  animation: gp-scaleUp 0.4s var(--gp-ease) both;
+}
+
+.gp-animate-pulse {
+  animation: gp-pulseGlow 2.5s ease-in-out infinite;
+}
+
+.gp-hover-lift {
+  transition: transform var(--gp-duration) var(--gp-ease);
+}
+
+.gp-hover-lift:hover {
+  transform: translateY(-3px);
+}

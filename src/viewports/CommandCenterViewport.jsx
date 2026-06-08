@@ -1,0 +1,127 @@
+import PropTypes from 'prop-types';
+import { useLifestyle } from '../flux/LifestyleDispatcher.jsx';
+import { ACTIONS } from '../flux/ActionCatalog.js';
+import { requestAdvice } from '../connectors/pulse-api.js';
+import ProgressRingWidget from '../widgets/ProgressRingWidget.jsx';
+import CarbonSplitWidget from '../widgets/CarbonSplitWidget.jsx';
+import InsightPulseWidget from '../widgets/InsightPulseWidget.jsx';
+
+const SECTOR_ICONS = {
+  commute: '🚗',
+  diet: '🍽️',
+  household: '⚡',
+  consumption: '🛍️',
+};
+
+/**
+ * Main overview viewport — the primary landing view.
+ * Contains the single <h1> for the entire application.
+ */
+const CommandCenterViewport = ({ onNavigate }) => {
+  const { emissions, activities, advice, isProcessing, dispatch } = useLifestyle();
+
+  const handleFetchAdvice = async () => {
+    if (emissions.totalKg <= 0) {
+      return;
+    }
+    dispatch({ type: ACTIONS.SIGNAL_LOADING });
+    const result = await requestAdvice(emissions);
+    if (result.ok) {
+      dispatch({ type: ACTIONS.STORE_ADVICE, payload: result.data });
+    }
+    dispatch({ type: ACTIONS.SIGNAL_READY });
+  };
+
+  const recentActivities = activities.slice(0, 5);
+
+  return (
+    <div>
+      {/* ── Hero Section with the sole H1 ────────────────────── */}
+      <section className="gp-animate-in" style={{ marginBottom: 'var(--gp-space-2xl)' }}>
+        <h1 className="gp-headline">
+          <span>Understand, Track, and Reduce</span>{' '}
+          Your Carbon Footprint
+        </h1>
+        <p className="gp-body" style={{ marginTop: 'var(--gp-space-sm)', maxWidth: '600px' }}>
+          GreenPulse empowers you with personalized insights and simple daily actions
+          to lower your environmental impact.
+        </p>
+      </section>
+
+      {/* ── Stats Row ────────────────────────────────────────── */}
+      <div className="gp-grid gp-grid--auto" style={{ marginBottom: 'var(--gp-space-xl)' }}>
+        <ProgressRingWidget
+          currentKg={emissions.totalKg}
+          targetKg={4000}
+          label="Annual Target"
+        />
+        <CarbonSplitWidget bySector={emissions.bySector} />
+      </div>
+
+      {/* ── Quick Actions ────────────────────────────────────── */}
+      <div className="gp-flex" style={{ gap: 'var(--gp-space-md)', marginBottom: 'var(--gp-space-xl)' }}>
+        <button
+          className="gp-btn gp-btn--primary"
+          onClick={() => onNavigate('impact-ledger')}
+          aria-label="Navigate to activity logging"
+          id="btn-go-log"
+        >
+          📊 Log Activity
+        </button>
+        <button
+          className="gp-btn gp-btn--ghost"
+          onClick={handleFetchAdvice}
+          disabled={isProcessing || emissions.totalKg <= 0}
+          aria-label="Get personalized AI reduction advice"
+          id="btn-get-advice"
+        >
+          {isProcessing ? '⏳ Loading...' : '✨ Get AI Tips'}
+        </button>
+      </div>
+
+      {/* ── AI Insights ──────────────────────────────────────── */}
+      <InsightPulseWidget advice={advice} isProcessing={isProcessing} />
+
+      {/* ── Recent Activity ──────────────────────────────────── */}
+      {recentActivities.length > 0 && (
+        <div className="gp-card gp-animate-in gp-animate-in--delay-4" style={{ marginTop: 'var(--gp-space-xl)' }}>
+          <div className="gp-flex gp-flex--between" style={{ marginBottom: 'var(--gp-space-md)' }}>
+            <p className="gp-label">Recent Activity</p>
+            <button
+              className="gp-btn gp-btn--ghost"
+              onClick={() => onNavigate('impact-ledger')}
+              aria-label="View all logged activities"
+              id="btn-view-all"
+              style={{ padding: '0.25rem 0.75rem', fontSize: '0.75rem' }}
+            >
+              View All →
+            </button>
+          </div>
+
+          <div className="gp-feed">
+            {recentActivities.map((activity, idx) => (
+              <div key={idx} className="gp-feed__item">
+                <div className="gp-feed__icon">
+                  {SECTOR_ICONS[activity.sector] || '📌'}
+                </div>
+                <div className="gp-feed__details">
+                  <p className="gp-feed__title">{activity.kind.replace(/_/g, ' ')}</p>
+                  <p className="gp-feed__meta">{activity.amount} units</p>
+                </div>
+                <div className="gp-feed__emission">
+                  +{activity.kg ? activity.kg.toFixed(1) : '0'} kg
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+CommandCenterViewport.propTypes = {
+  onNavigate: PropTypes.func.isRequired,
+};
+
+export default CommandCenterViewport;
