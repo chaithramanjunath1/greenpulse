@@ -802,6 +802,26 @@ body::before {
 }
 
 /* ── Accessibility ───────────────────────────────────────────── */
+.gp-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  padding: 1rem;
+  background: var(--gp-emerald);
+  color: #fff;
+  z-index: 10000;
+  font-weight: 600;
+  border-radius: 0 0 var(--gp-radius-md) 0;
+  transition: top 0.2s ease;
+  text-decoration: none;
+}
+
+.gp-skip-link:focus {
+  top: 0;
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
