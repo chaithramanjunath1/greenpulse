@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json-summary', 'lcov'],
-      include: ['src/algorithms/**/*.js'],
+      include: ['src/algorithms/**/*.js', 'server/validation-rules.js'],
       exclude: ['src/algorithms/**/*.test.js'],
     },
   },

@@ -790,6 +790,42 @@ body::before {
   }
 }
 
+/* Visible focus indicator for keyboard users — WCAG 2.4.7 */
+:focus-visible {
+  outline: 2px solid var(--gp-emerald-bright);
+  outline-offset: 2px;
+  border-radius: var(--gp-radius-sm);
+}
+
+.gp-btn:focus-visible {
+  outline: 2px solid var(--gp-emerald-bright);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.25);
+}
+
+.gp-spine__link:focus-visible {
+  outline: 2px solid var(--gp-emerald-bright);
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 2px rgba(52, 211, 153, 0.3);
+}
+
+.gp-select:focus-visible,
+.gp-input:focus-visible {
+  outline: 2px solid var(--gp-emerald-bright);
+  outline-offset: 0;
+  border-color: var(--gp-emerald-bright);
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .gp-card {
+    border: 1px solid CanvasText;
+  }
+  .gp-btn {
+    border: 1px solid ButtonText;
+  }
+}
+
 .gp-sr-only {
   position: absolute;
   width: 1px;
